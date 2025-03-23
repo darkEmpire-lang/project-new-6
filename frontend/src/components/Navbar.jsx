@@ -15,18 +15,18 @@ const Navbar = () => {
   };
 
   return (
-    <div className="flex items-center justify-between py-5 font-bold  h-20">
+    <div className="flex items-center justify-between py-5 font-bold  h-18">
       {/* Logo */}
       <Link to="/">
         <img
-          src={assets.n3}
+          src={assets.flogo}
           className="w-12 sm:w-20 md:w-48 transform transition-all duration-300 hover:scale-110"
           alt="Logo"
         />
       </Link>
 
       {/* Desktop Nav Links */}
-      <ul className="hidden sm:flex gap-8 text-sm text-gray-700">
+      <ul className="hidden sm:flex gap-8 text-md text-gray-700">
         <NavLink
           to="/"
           className="flex flex-col items-center gap-1 group relative hover:text-blue-600 transition-all duration-300"
