@@ -34,7 +34,7 @@ const Orders = () => {
   }, [token]);
 
   return (
-    <div className="bg-[#f8f1e4] min-h-screen p-6">
+    <div className="bg-white min-h-screen p-6">
       <div className="text-3xl text-[#5a4235] font-bold text-center mb-6">
         <Title text1="MY" text2=" ORDERS" />
       </div>
@@ -48,7 +48,7 @@ const Orders = () => {
           orderData.map((item, index) => (
             <div
               key={index}
-              className="border-2 border-[#d4a373] bg-[#fff7e1] rounded-lg shadow-md p-5 hover:shadow-lg transition-shadow"
+              className="border-2 border-[#d4a373] bg-white rounded-lg shadow-md p-5 hover:shadow-lg transition-shadow"
             >
               <div className="flex flex-col md:flex-row gap-6 items-center">
                 <img

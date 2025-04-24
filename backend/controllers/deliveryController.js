@@ -1,60 +1,65 @@
-import Delivery from '../models/deliveryModel.js';
+import DeliveryInfo from "../models/DeliveryModel.js";
 
-// Create a new delivery record
-export const addDelivery = async (req, res) => {
+// Fetch all delivery infos for the logged-in user
+export const getDeliveryInfos = async (req, res) => {
   try {
-    const delivery = new Delivery({ ...req.body, userId: req.user.id });
-    await delivery.save();
-    res.status(201).json({ success: true, message: 'Delivery information saved successfully', delivery });
+    const userId = req.body.userId; // Set by your authUser middleware
+    const infos = await DeliveryInfo.find({ user: userId }).sort({ createdAt: -1 });
+    res.json({ success: true, deliveryInfos: infos });
   } catch (error) {
     res.status(500).json({ success: false, message: error.message });
   }
 };
 
-// Get all deliveries for a user
-export const getDeliveries = async (req, res) => {
+// Add a new delivery info for the logged-in user
+export const addDeliveryInfo = async (req, res) => {
   try {
-    const deliveries = await Delivery.find({ userId: req.user.id });
-    res.status(200).json({ success: true, deliveries });
+    const userId = req.body.userId;
+    const deliveryInfo = req.body.deliveryInfo;
+    if (!deliveryInfo) return res.status(400).json({ success: false, message: "No delivery info provided" });
+
+    const newInfo = new DeliveryInfo({ ...deliveryInfo, user: userId });
+    await newInfo.save();
+
+    const infos = await DeliveryInfo.find({ user: userId }).sort({ createdAt: -1 });
+    res.json({ success: true, deliveryInfos: infos });
   } catch (error) {
     res.status(500).json({ success: false, message: error.message });
   }
 };
 
-// Get a single delivery record by ID
-export const getDeliveryById = async (req, res) => {
+// Update a delivery info (only if it belongs to the logged-in user)
+export const updateDeliveryInfo = async (req, res) => {
   try {
-    const delivery = await Delivery.findById(req.params.id);
-    if (!delivery) {
-      return res.status(404).json({ success: false, message: 'Delivery not found' });
-    }
-    res.status(200).json({ success: true, delivery });
+    const userId = req.body.userId;
+    const infoId = req.params.id;
+    const newInfo = req.body.deliveryInfo;
+
+    const info = await DeliveryInfo.findOneAndUpdate(
+      { _id: infoId, user: userId },
+      newInfo,
+      { new: true }
+    );
+    if (!info) return res.status(404).json({ success: false, message: "Delivery info not found" });
+
+    const infos = await DeliveryInfo.find({ user: userId }).sort({ createdAt: -1 });
+    res.json({ success: true, deliveryInfos: infos });
   } catch (error) {
     res.status(500).json({ success: false, message: error.message });
   }
 };
 
-// Update a delivery record
-export const updateDelivery = async (req, res) => {
+// Delete a delivery info (only if it belongs to the logged-in user)
+export const deleteDeliveryInfo = async (req, res) => {
   try {
-    const updatedDelivery = await Delivery.findByIdAndUpdate(req.params.id, req.body, { new: true });
-    if (!updatedDelivery) {
-      return res.status(404).json({ success: false, message: 'Delivery not found' });
-    }
-    res.status(200).json({ success: true, message: 'Delivery information updated successfully', updatedDelivery });
-  } catch (error) {
-    res.status(500).json({ success: false, message: error.message });
-  }
-};
+    const userId = req.body.userId;
+    const infoId = req.params.id;
 
-// Delete a delivery record
-export const deleteDelivery = async (req, res) => {
-  try {
-    const deletedDelivery = await Delivery.findByIdAndDelete(req.params.id);
-    if (!deletedDelivery) {
-      return res.status(404).json({ success: false, message: 'Delivery not found' });
-    }
-    res.status(200).json({ success: true, message: 'Delivery information deleted successfully' });
+    const info = await DeliveryInfo.findOneAndDelete({ _id: infoId, user: userId });
+    if (!info) return res.status(404).json({ success: false, message: "Delivery info not found" });
+
+    const infos = await DeliveryInfo.find({ user: userId }).sort({ createdAt: -1 });
+    res.json({ success: true, deliveryInfos: infos });
   } catch (error) {
     res.status(500).json({ success: false, message: error.message });
   }

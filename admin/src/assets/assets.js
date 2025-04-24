@@ -4,7 +4,7 @@ import order_icon from './order_icon.png'
 import upload_area from './upload_area.png'
 import parcel_icon from './parcel_icon.svg'
 import list_icon from './list_icon.png'
-import Fashion_Logo from './Fashion_Logo.png'
+import flogo from  './flogo.png'
 
 export const assets = {
     logo,
@@ -13,6 +13,7 @@ export const assets = {
     upload_area,
     parcel_icon,
     list_icon,
-    Fashion_Logo
+    flogo
+  
 }
 

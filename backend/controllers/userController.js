@@ -5,7 +5,7 @@ import userModel from "../models/userModel.js";
 
 // Function to create a JWT token
 const createToken = (id) => {
-  return jwt.sign({ id }, process.env.JWT_SECRET, { expiresIn: "1d" });
+  return jwt.sign({ id }, process.env.JWT_SECRET, { expiresIn: "30d" });
 };
 
 // User login handler

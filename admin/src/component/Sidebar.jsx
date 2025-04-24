@@ -7,7 +7,7 @@ const Sidebar = () => {
     <div className="w-[18%] min-h-screen bg-[#f8f1e4] border-r-2 border-[#d4a373] shadow-md">
       {/* Logo Section */}
       <div className="flex justify-center items-center py-6">
-        <img className="w-12 h-12 rounded-full shadow-lg border-2 border-[#b08968]" src={assets.logo} alt="Logo" />
+        <img className="w-12 h-12 rounded-full shadow-lg border-2 border-[#b08968]" src={assets.flogo} alt="Logo" />
       </div>
 
       {/* Navigation Links */}

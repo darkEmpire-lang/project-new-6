@@ -1,19 +1,12 @@
-import express from 'express';
-import authUser from '../middleware/auth.js';
-import {
-  addDelivery,
-  getDeliveries,
-  getDeliveryById,
-  updateDelivery,
-  deleteDelivery
-} from '../controllers/deliveryController.js';
+import express from "express";
+import { getDeliveryInfos, addDeliveryInfo, updateDeliveryInfo, deleteDeliveryInfo, } from "../controllers/deliveryController.js";
+import authUser from "../middleware/auth.js";
 
 const router = express.Router();
 
-router.post('/add', authUser, addDelivery);
-router.get('/', authUser, getDeliveries);
-router.get('/:id', authUser, getDeliveryById);
-router.put('/:id', authUser, updateDelivery);
-router.delete('/:id', authUser, deleteDelivery);
+router.get("/", authUser, getDeliveryInfos);
+router.post("/", authUser, addDeliveryInfo);
+router.put("/:id", authUser, updateDeliveryInfo);
+router.delete("/:id", authUser, deleteDeliveryInfo);
 
 export default router;
